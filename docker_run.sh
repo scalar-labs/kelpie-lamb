@@ -13,7 +13,6 @@ usage_exit() {
   exit 1
 }
 
-<<<<<<< HEAD
 get_absolute_path() {
   local file="${1}"
   local dir=$(cd $(dirname ${file}); pwd)
@@ -42,28 +41,6 @@ while [ $# -gt 0 ]; do
       ;;
     -t | --target-contract)
       target_contract=$(get_absolute_path "${2}")
-=======
-while [ $# -gt 0 ]; do
-  case ${1} in
-    -l | --lamb-config)
-      lamb_config="${2}"
-      shift 2
-      ;;
-    -c | --contract-config)
-      contract_config="${2}"
-      shift 2
-      ;;
-    -v | --variable-config)
-      variable_config="${2}"
-      shift 2
-      ;;
-    -p | --population-contract)
-      population_contract="${2}"
-      shift 2
-      ;;
-    -t | --target-contract)
-      target_contract="${2}"
->>>>>>> 750d3d9 (copy files and update docker_run.sh)
       shift 2
       ;;
     -e | --except-pre)
