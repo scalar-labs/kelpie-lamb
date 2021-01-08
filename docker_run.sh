@@ -13,26 +13,34 @@ usage_exit() {
   exit 1
 }
 
+get_absolute_path() {
+  local file="${1}"
+  local dir=$(cd $(dirname ${file}); pwd)
+  local name=$(basename ${file})
+
+  echo "${dir}/${name}"
+}
+
 while [ $# -gt 0 ]; do
   case ${1} in
     -l | --lamb-config)
-      lamb_config="${2}"
+      lamb_config=$(get_absolute_path "${2}")
       shift 2
       ;;
     -c | --contract-config)
-      contract_config="${2}"
+      contract_config=$(get_absolute_path "${2}")
       shift 2
       ;;
     -v | --variable-config)
-      variable_config="${2}"
+      variable_config=$(get_absolute_path "${2}")
       shift 2
       ;;
     -p | --population-contract)
-      population_contract="${2}"
+      population_contract=$(get_absolute_path "${2}")
       shift 2
       ;;
     -t | --target-contract)
-      target_contract="${2}"
+      target_contract=$(get_absolute_path "${2}")
       shift 2
       ;;
     -e | --except-pre)
@@ -62,11 +70,11 @@ if ${except_pre} && ${only_pre}; then
 fi
 
 docker run \
-  -v ${LAMB_CONFIG}:/lamb/lamb_config.toml \
-  -v ${CONTRACT_CONFIG}:/lamb/contract_config.json \
-  -v ${VARIABLE_CONFIG}:/lamb/variable_config.json \
-  -v ${POPULATION_CONTRACT}:/lamb/${POPULATION_CONTRACT##*/} \
-  -v ${TARGET_CONTRACT}:/lamb/${TARGET_CONTRACT##*/} \
+  -v ${lamb_config}:/lamb/lamb_config.toml \
+  -v ${contract_config}:/lamb/contract_config.json \
+  -v ${variable_config}:/lamb/variable_config.json \
+  -v ${population_contract}:/lamb/$(basename ${population_contract}) \
+  -v ${target_contract}:/lamb/$(basename ${target_contract}) \
   -e EXCEPT_PRE=${except_pre} \
   -e ONLY_PRE=${only_pre} \
   ghcr.io/scalar-labs/kelpie-lamb
