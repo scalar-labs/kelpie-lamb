@@ -1,0 +1,14 @@
+.git
+.github
+.gradle
+bin
+build
+gradle
+.dockerignore
+.gitignore
+Dockerfile
+gradlew*
+docker_run.sh
+README.md
+*.toml
+*.json

@@ -1,4 +1,10 @@
-FROM openjdk:8u212-jre-slim-stretch
+FROM gradle:6.0.1-jdk8 AS build
+
+COPY . /kelpie-lamb
+WORKDIR /kelpie-lamb
+RUN gradle shadowJar
+
+FROM openjdk:8u275-jre-slim
 ENV KELPIE_VERSION 1.1.0
 
 RUN apt-get update && apt-get install wget unzip -y && \
@@ -10,7 +16,7 @@ RUN apt-get update && apt-get install wget unzip -y && \
 
 RUN mkdir -p /lamb/build/libs/
 
-COPY kelpie-lamb-all.jar /lamb/build/libs/
+COPY --from=build /kelpie-lamb/build/libs/kelpie-lamb-all.jar /lamb/build/libs/
 COPY sample-keys /lamb/sample-keys
 COPY entrypoint.sh /lamb/
 

@@ -1,10 +1,9 @@
-![Lamb](https://github.com/scalar-labs/kelpie-test/workflows/Lamb/badge.svg)
+![Lamb](https://github.com/scalar-labs/kelpie-lamb/workflows/Lamb/badge.svg)
 
 # Kelpie Lamb
 Kelpie Lamb is a Kelpie extension for benchmarking of Scalar DL contracts.
 
-## Build
-
+## Build if needed
 ```console
 $ ./gradlew shadowJar
 ```
@@ -27,9 +26,14 @@ You can set up the environment with [scalar-terraform](https://github.com/scalar
     ```
 
 ### With docker
-#### Docker build
+#### Build if needed
 ```console
-$ ./gradlew docker
+$ docker build . -t ghcr.io/scalar-labs/kelpie-lamb
+```
+
+#### Pull from the GitHub Container Registry
+```console
+$ docker pull ghcr.io/scalar-labs/kelpie-lamb
 ```
 
 #### Run a test
